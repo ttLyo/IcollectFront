@@ -1,0 +1,9 @@
+.searchResult{
+    padding: 70px 10%;
+    .resultList{
+        display: flex;
+        justify-content: space-between;
+        padding-top: 5px;
+        flex-wrap: wrap;
+    }
+}

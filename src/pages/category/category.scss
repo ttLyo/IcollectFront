@@ -1,0 +1,44 @@
+.info{
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-around;
+    padding-bottom:10px ;
+    border-bottom: 1px solid rgb(170, 170, 170);
+    .carousel{
+        width: 45%;
+        .ant-carousel .slick-slide {
+            text-align: center;
+            height: 240px;
+            line-height: 160px;
+            background: #364d79;
+            overflow: hidden;
+        }
+        .ant-carousel .slick-slide h3 {
+            color: #fff;
+        }
+    }
+    .titleInfo{
+        width: 50%;
+        padding: 3px 20px;
+        .words{
+            font-size: 1.1em;
+            padding-top: 20px;
+            padding-left: 20px;
+        }
+    }
+}
+.itemList{
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    .production{
+        cursor: pointer;
+        width: 19%;
+        margin: 0 3%;
+        color: black;
+        img{
+            width: 100%;
+        }
+    }
+}

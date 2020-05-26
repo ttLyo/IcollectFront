@@ -1,0 +1,60 @@
+.header{
+    position: fixed;
+    width: 100%;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgb(215, 233, 245);
+    background-color: #f9f3f3;
+    z-index: 1000;
+}
+.web_name{
+    font-size: 1.3em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: rgb(43, 42, 42);
+}
+.search{
+    float: right;
+    width: 200px;
+}
+.btn_login{
+    float: right;
+}
+.production{
+    cursor: pointer;
+    width: 24%;
+    margin-bottom: 10px;
+    padding: 8px;
+    color: black;
+    transition: border-color 0.5s;
+    -webkit-transition: border-color 0.5s;
+    -moz-transition: border-color 0.5s;
+    -ms-transition: border-color 0.5s;
+    -o-transition: border-color 0.5s;
+    border:1px dotted white;
+
+    .title{
+        font-size: 1.3em;
+        height: 25px;
+        color: rgb(68, 67, 67);
+    }
+    .author{
+        font-size: 0.9em;
+        color: rgb(68, 67, 67);
+        height: 20px;
+        padding-left: 15px;
+    }
+    .content{
+        height: 40px;
+        color: rgb(68, 67, 67);
+    }
+    img{
+        width: 100%;
+    }
+}
+.production:hover{
+    border:1px dotted rgb(99, 95, 95);
+}
+.footer{
+    text-align: center;
+    margin: 10px;
+}

@@ -1,0 +1,53 @@
+.detail{
+    padding: 50px 10%;
+    h1{
+        margin-top: -10px;
+        text-align: center;
+    }
+    .description{
+        width: 80%;
+        margin: 0 auto;
+        font-size: 1.5em;
+        text-align: center;
+    }
+    .summary{
+        display: flex;
+        margin-top: 20px;
+        .carousel{
+            width: 55%;
+            .ant-carousel .slick-slide {
+                text-align: center;
+                height: 240px;
+                line-height: 160px;
+                background: #364d79;
+                overflow: hidden;
+            }
+            .ant-carousel .slick-slide h3 {
+                color: #fff;
+            }
+        }
+        .titleInfo{
+            width: 40%;
+            padding: 3px 10px;
+            .target{
+                color: blue;
+                text-align: center;
+            }
+            .now{
+                color: rgb(29, 214, 29);
+                text-align: center;
+            }
+            .timeLeft{
+                margin-top: 10px;
+                text-align: center;
+            }
+        }
+        .thancks{
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+    .information{
+        
+    }
+}
