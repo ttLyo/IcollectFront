@@ -1,9 +1,10 @@
-import {Layout, Menu, Button, Tabs, List, Form, Input, InputNumber, Timeline,Avatar } from 'antd';
+import {Layout, Menu, Button, Tabs, List, Form, Input, InputNumber, Timeline,Avatar, message } from 'antd';
 import React, {Component} from "react";
 import "antd/dist/antd.css";
-import moment from 'moment';
 import {Link} from "react-router-dom";
 import itemjpg from "../../images/123.jpeg";
+import Productoin from "../../common/prodution"
+import axios from "../../../util/axios"
 import '../about.scss';
 const {TabPane} = Tabs
 const {TextArea} = Input;
@@ -28,15 +29,43 @@ const data = [
 
 
 class SiderDemo extends Component {
+    formRef = React.createRef();
     constructor(){
         super()
-        // console.log(localStorage.getItem("info"))
         this.state={
-            user:{
-                name:localStorage.getItem("username")
-            },
-            
+            projectList:[],
+            commentList:[]
         }
+    }
+    onFill = (user) => {
+        console.log(1,this.formRef.current)
+        this.formRef.current.setFieldsValue({
+          ...user
+        });
+      };
+    componentDidMount(){
+        this.getInfo()
+    }
+    getInfo=()=>{
+        axios.get("getCommentByUid").then(res=>{
+            // console.log(res)
+            this.setState({commentList:res.data.data})
+        })
+        axios.get("getUserInfoByid").then(res=>{
+            // console.log(1,res)
+            this.setState({projectList:res.data.data.createdProject})
+            if(this.formRef.current)
+            this.onFill(res.data.data)
+        })
+    }
+    setInfo=(data)=>{
+        axios.post("setUserInfo",JSON.stringify(data)).then(res=>{
+            // console.log(res)
+            if(res.data.code==200){
+                message.success("修改成功")
+            }
+            // this.setState({commentList:res.data.data})
+        })
     }
     render() {
         const layout = {
@@ -63,21 +92,21 @@ class SiderDemo extends Component {
                 <Tabs tabPosition="left" style={{marginTop: '3em'}}>
                     <TabPane tab="账户信息" key="1">
 
-                        <Form {...layout} initialValues={this.state.user}  onFinish={onFinish}  validateMessages={validateMessages}>
-                            <Form.Item name='name' label="昵称">
-                                <Input value={this.state.name}/>
+                        <Form  ref={this.formRef} {...layout}  onFinish={this.setInfo}  validateMessages={validateMessages}>
+                            <Form.Item name='username' label="昵称">
+                                <Input value="123" />
                             </Form.Item>
 
                             <Form.Item name='area' label="地区">
+                                <Input />
+                            </Form.Item>
+
+                            <Form.Item name='tel' label="联系电话">
                                 <Input/>
                             </Form.Item>
 
-                            <Form.Item name='phone' label="联系电话">
-                                <Input/>
-                            </Form.Item>
-
-                            <Form.Item name='introduction' label="个人介绍">
-                                <Input.TextArea/>
+                            <Form.Item name='description' label="个人介绍">
+                                <Input.TextArea />
                             </Form.Item>
 
                             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 2 }}>
@@ -126,45 +155,17 @@ class SiderDemo extends Component {
                         <div className="join">
                             <h2>已发布项目</h2>
                             <div className="joinList">
-                                {[1, 2, 3, 4].map((item) => (
-                                    <Link to={"/detail/" + item} className="joinItem" key={item}>
-                                        {/* <div> */}
-                                        <img src={itemjpg} alt="img"/>
-                                        <p className="title">some title</p>
-                                        <p>￥200</p>
-                                        <p>已完成/未完成</p>
-                                        {/* </div> */}
-                                    </Link>
+                            {this.state.projectList.map((item, index) => (
+                                <Productoin 
+                                key={index}
+                                id={item.pid}
+                                img={item.image||itemjpg} 
+                                title={item.name}
+                                author={item.author} 
+                                content={item.introduction} />
+                                
 
-                                ))}
-                            </div>
-                            <h2>收藏项目</h2>
-                            <div className="joinList">
-                                {[1, 2, 3, 4].map((item) => (
-                                    <Link to={"/detail/" + item} className="joinItem" key={item}>
-                                        {/* <div> */}
-                                        <img src={itemjpg} alt="img"/>
-                                        <p className="title">some title</p>
-                                        <p>￥200</p>
-                                        <p>已完成/未完成</p>
-                                        {/* </div> */}
-                                    </Link>
-
-                                ))}
-                            </div>
-                            <h2>订阅项目</h2>
-                            <div className="joinList">
-                                {[1, 2, 3, 4].map((item) => (
-                                    <Link to={"/detail/" + item} className="joinItem" key={item}>
-                                        {/* <div> */}
-                                        <img src={itemjpg} alt="img"/>
-                                        <p className="title">some title</p>
-                                        <p>￥200</p>
-                                        <p>已完成/未完成</p>
-                                        {/* </div> */}
-                                    </Link>
-
-                                ))}
+                            ))}
                             </div>
                         </div>
                     </TabPane>
@@ -193,13 +194,13 @@ class SiderDemo extends Component {
                     <TabPane tab="消息" key="5">
                         <List
                             itemLayout="horizontal"
-                            dataSource={data}
+                            dataSource={this.state.commentList}
                             renderItem={item => (
                                 <List.Item>
                                     <List.Item.Meta
                                         avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                        title={<a href="https://ant.design">{item.title}</a>}
-                                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                        title={<a href={"#/detail/"+item.pid}>评论 [{item.projectName}]</a>}
+                                        description={item.content}
                                     />
                                 </List.Item>
                             )}

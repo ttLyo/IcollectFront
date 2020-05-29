@@ -22,10 +22,11 @@ class summary extends Component {
         }
         let data={
             pid:this.props.pid,
-            // donor:localStorage.getItem("username"),
-            donee:this.props.author,
+            donor:JSON.parse(localStorage.getItem("info")).id ,
+            donee:this.props.authorID,
             money:this.state.money
         }
+        console.log(data)
         axios.post("addDonation",JSON.stringify(data)).then(res=>{
             console.log(res)
             if(res.data.code==200){
@@ -40,6 +41,7 @@ class summary extends Component {
         this.setState({money:e})
     }
     render(){
+        console.log(this.props)
         return (
             <div className="summary">
                 <div className="carousel" >
@@ -65,6 +67,7 @@ class summary extends Component {
                     onCancel={this.handleCancel}
                     >
                     <p className="thancks">感谢您的支持！</p>
+                    <img src={url+"img/get/project/"+this.props.pid+"/"+this.props.qrCode}></img><br />
                     支持金额：￥<InputNumber min={1} value={this.state.money} onChange={this.handleChange} />
                 </Modal>
             </div>

@@ -26,14 +26,29 @@ const formItemLayout = {
   };
 
 class register extends Component {
+    constructor(){
+        super();
+        this.state={
+            username:"",
+            password:""
+        }
+    }
     register=(e)=>{
         console.log(e)
-        let data={
-            username:e.username,
-            password:e.password
-        }
-        axios.post("login",JSON.stringify(data)).then(res=>{
+        let data=new FormData()
+        data.append("username",e.username)
+        data.append("password",e.password)
+        
+        axios.post("register",data).then(res=>{
             console.log(res)
+            if(res.data.code===200){
+                localStorage.setItem("token",res.data.data.token)
+                localStorage.setItem("info",JSON.stringify(res.data.data.info))
+                localStorage.setItem("username",e.username)
+                window.location.hash="#/"
+                window.location.reload()
+            }
+            
         })
     }
     render(){
@@ -43,7 +58,7 @@ class register extends Component {
                 {...formItemLayout}
                 // form={form}
                 name="register"
-                onFinish={register}
+                onFinish={this.register}
                 initialValues={{
                     residence: ['zhejiang', 'hangzhou', 'xihu'],
                     prefix: '86',

@@ -41,7 +41,7 @@ class information extends Component {
     }
     getInfo=()=>{
          axios.get("getComment?pid="+this.props.pid).then(res=>{
-            console.log(res)
+            // console.log(res)
             let commentList=[]
             for(let i of res.data.data){
                 commentList.push(comment(i.username,'',i.content,i.ctime))
@@ -98,7 +98,7 @@ class information extends Component {
                         </Form>
 
                     </TabPane>
-                    <TabPane tab="作者信息" key="3">
+                    {/* <TabPane tab="作者信息" key="3">
                         <Descriptions title="作者信息" layout="vertical">
                             <Descriptions.Item label="姓名">Zhou Maomao</Descriptions.Item>
                             <Descriptions.Item label="电话">1810000000</Descriptions.Item>
@@ -108,7 +108,7 @@ class information extends Component {
                             </Descriptions.Item>
                             <Descriptions.Item label="详情">empty</Descriptions.Item>
                         </Descriptions>
-                    </TabPane>
+                    </TabPane> */}
                 </Tabs>
             </div>
         )

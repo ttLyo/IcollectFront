@@ -28,7 +28,7 @@ class detail extends Component {
     }
     getInfo=(id)=>{
          axios.get("project/getByPid?pid="+id).then(res=>{
-            console.log(res)
+            // console.log(res)
             this.setState(res.data.data)
         })
     }
@@ -42,10 +42,14 @@ class detail extends Component {
                     endTime={this.state.endTime}
                     pid={this.state.pid}
                     author={this.state.author}
+                    authorID={this.state.authorID}
                     image={this.state.image}
+                    qrCode={this.state.qrCode}
                     update={this.getInfo}
                 />
-                <Information pid={this.props.match.params.id} introduction={this.state.introduction} />
+                <Information 
+                pid={this.props.match.params.id} 
+                introduction={this.state.introduction} />
             </div>
         )
     }

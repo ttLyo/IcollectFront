@@ -47,18 +47,20 @@ const Creator = ({current}) => {
   };
   var pid;
   var upConfig={
-    action:url+"img/project",
+    action:url+"img/upload/project",
     name:"img",
-    accept:"image/jpeg;image/png",
+    accept:"image/jpeg,image/png",
+    headers:{"token":localStorage.getItem("token")},
     data:{
       pid:"e0c8836e-5eff-40e6-94d3-8d9ce0577d58",
       type:"image",
     }
   }
   var upConfig1={
-    action:url+"img/project",
+    action:url+"img/upload/project",
     name:"img",
-    accept:"image/jpeg;image/png",
+    accept:"image/jpeg,image/png",
+    headers:{"token":localStorage.getItem("token")},
     data:{
       pid:"e0c8836e-5eff-40e6-94d3-8d9ce0577d58",
       type:"qrCode"
