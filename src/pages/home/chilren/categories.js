@@ -17,7 +17,7 @@ class categories extends Component {
             list.push(axios.get("project/getByCategory?category="+i))
         }
         Axios.all(list).then((a)=>{
-            // console.log(a)
+            console.log(a)
             let hot=[]
             a=a.map((i)=>{
                 hot.push(i.data.data[0])

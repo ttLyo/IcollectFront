@@ -13,6 +13,9 @@
     .summary{
         display: flex;
         margin-top: 20px;
+            .qrCode{
+                width:50%;
+            }
         .carousel{
             width: 55%;
             .ant-carousel .slick-slide {
@@ -42,12 +45,8 @@
                 text-align: center;
             }
         }
-        .thancks{
-            text-align: center;
-            font-weight: bold;
-        }
-        .qrCode{
-            width:50%;
+        .image{
+            width: 100%;
         }
     }
     .information{

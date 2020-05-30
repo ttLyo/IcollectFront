@@ -1,10 +1,12 @@
-import {Layout, Menu, Button, Tabs, List, Form, Input, InputNumber, Timeline,Avatar, message } from 'antd';
+import {Layout, Menu, Button, Tabs, List, Form, Input, Upload, Timeline,Avatar, message } from 'antd';
 import React, {Component} from "react";
 import "antd/dist/antd.css";
 import {Link} from "react-router-dom";
 import itemjpg from "../../images/123.jpeg";
+import pic from "../../images/user.jpg";
 import Productoin from "../../common/prodution"
 import axios from "../../../util/axios"
+import url from "../../../util/url"
 import '../about.scss';
 const {TabPane} = Tabs
 const {TextArea} = Input;
@@ -12,20 +14,6 @@ const {TextArea} = Input;
 const {SubMenu} = Menu;
 const {Header, Content, Sider} = Layout;
 
-const data = [
-    {
-        title: 'Ant Design Title 1',
-    },
-    {
-        title: 'Ant Design Title 2',
-    },
-    {
-        title: 'Ant Design Title 3',
-    },
-    {
-        title: 'Ant Design Title 4',
-    },
-];
 
 
 class SiderDemo extends Component {
@@ -34,11 +22,13 @@ class SiderDemo extends Component {
         super()
         this.state={
             projectList:[],
-            commentList:[]
+            commentList:[],
+            avatar:"",
+            username:""
         }
     }
     onFill = (user) => {
-        console.log(1,this.formRef.current)
+        // console.log(1,this.formRef.current)
         this.formRef.current.setFieldsValue({
           ...user
         });
@@ -52,10 +42,17 @@ class SiderDemo extends Component {
             this.setState({commentList:res.data.data})
         })
         axios.get("getUserInfoByid").then(res=>{
-            // console.log(1,res)
-            this.setState({projectList:res.data.data.createdProject})
-            if(this.formRef.current)
-            this.onFill(res.data.data)
+            console.log(1,res)
+            if(res.data.code==200){
+                this.setState({
+                    projectList:res.data.data.createdProject,
+                    avatar:res.data.data.avatar,
+                    username:res.data.data.username
+                })
+                if(this.formRef.current)
+                this.onFill(res.data.data)
+            }
+            
         })
     }
     setInfo=(data)=>{
@@ -69,8 +66,8 @@ class SiderDemo extends Component {
     }
     render() {
         const layout = {
-            labelCol: {span: 2},
-            wrapperCol: {span: 12},
+            labelCol: {span: 4},
+            wrapperCol: {span: 17},
         };
         const onFinish = values => {
             console.log('Success:', values);
@@ -85,12 +82,25 @@ class SiderDemo extends Component {
                 range: '${label} must be between ${min} and ${max}',
             },
         };
-
-
+        let upProps={
+            action:url+"image/upload/user",
+            name:"img",
+            accept:"image/jpeg,image/png",
+            headers:{"token":localStorage.getItem("token")},
+            data:{
+                username:localStorage.getItem("username"),
+            },
+            onChange:(e)=>{
+                if(!e.event){
+                    this.getInfo()
+                }
+            }
+        }
+        let urlPic = this.props.image?url+"image/get/user/"+this.state.avatar+"/"+this.state.username:pic
         return (
             <div className="infomation">
                 <Tabs tabPosition="left" style={{marginTop: '3em'}}>
-                    <TabPane tab="账户信息" key="1">
+                    <TabPane tab="账户信息" key="1" className="info1">
 
                         <Form  ref={this.formRef} {...layout}  onFinish={this.setInfo}  validateMessages={validateMessages}>
                             <Form.Item name='username' label="昵称">
@@ -111,10 +121,16 @@ class SiderDemo extends Component {
 
                             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 2 }}>
                                 <Button type="primary" htmlType="submit">
-                                    Submit
+                                    提交信息
                                 </Button>
                             </Form.Item>
                         </Form>
+                        <div className="userPic">
+                            <Upload {...upProps}>
+                            <img className="image" src={urlPic} style={{width:"65%"}}></img>
+                            </Upload>
+                            
+                        </div>
                     </TabPane>
 
                     {/* <TabPane tab="付款及配送信息" key="2">
@@ -198,7 +214,7 @@ class SiderDemo extends Component {
                             renderItem={item => (
                                 <List.Item>
                                     <List.Item.Meta
-                                        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                        avatar={<Avatar src={pic} />}
                                         title={<a href={"#/detail/"+item.pid}>评论 [{item.projectName}]</a>}
                                         description={item.content}
                                     />

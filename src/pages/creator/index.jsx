@@ -9,25 +9,7 @@ import url from "../../util/url"
 
 const {Step} = Steps;
 
-const getCurrentStepAndComponent = current => {
-  switch (current) {
-    case 'confirm':
-      return <Step2/>;
 
-    case 'result':
-      return {
-        step: 2,
-        component: <Step3/>,
-      };
-
-    case 'info':
-    default:
-      return {
-        step: 0,
-        component: <Step1/>,
-      };
-  }
-};
 
   
 
@@ -47,38 +29,58 @@ const Creator = ({current}) => {
   };
   var pid;
   var upConfig={
-    action:url+"img/upload/project",
+    action:url+"image/upload/project",
     name:"img",
     accept:"image/jpeg,image/png",
     headers:{"token":localStorage.getItem("token")},
     data:{
-      pid:"e0c8836e-5eff-40e6-94d3-8d9ce0577d58",
+      pid:"bde95294-ebac-4c8b-bf8c-9a875f5a373f",
       type:"image",
     }
   }
   var upConfig1={
-    action:url+"img/upload/project",
+    action:url+"image/upload/project",
     name:"img",
     accept:"image/jpeg,image/png",
     headers:{"token":localStorage.getItem("token")},
     data:{
-      pid:"e0c8836e-5eff-40e6-94d3-8d9ce0577d58",
+      pid:"bde95294-ebac-4c8b-bf8c-9a875f5a373f",
       type:"qrCode"
     }
   }
+  const getCurrentStepAndComponent = current => {
+    switch (current) {
+      case 'confirm':
+        return <Step2/>;
+  
+      case 'result':
+        return {
+          step: 2,
+          component: <Step3 config={upConfig} config1={upConfig1} />,
+        };
+  
+      case 'info':
+      default:
+        return {
+          step: 0,
+          component: <Step1/>,
+        };
+    }
+  };
   const add = (e)=>{
     let user = JSON.parse(localStorage.getItem("info"))
     e.authorID = user.id
     e.author = user.username
-    e.startTime = e.time[0].format("YYYY-MM-DD hh:mm::ss")
-    e.endTime = e.time[1].format("YYYY-MM-DD hh:mm::ss")
+    e.startTime = e.time[0].format("YYYY-MM-DD hh:mm:ss")
+    e.endTime = e.time[1].format("YYYY-MM-DD hh:mm:ss")
     console.log(e)
     axios.post("project/add",JSON.stringify(e)).then(res=>{
       console.log(res)
       if(res.data.code==200){
           message.info("成功",2)
-          upConfig.data.pid=res.data.data.pid
-          upConfig1.data.pid=res.data.data.pid
+          // upConfig.data.pid=res.data.data.pid
+          // upConfig1.data.pid=res.data.data.pid
+          localStorage.setItem("pid",res.data.data.pid)
           next(currentStep)
       }
     })

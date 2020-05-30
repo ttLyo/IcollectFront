@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from "../../../util/axios"
 class login extends Component {
@@ -24,6 +24,8 @@ class login extends Component {
                 localStorage.setItem("username",e.username)
                 window.location.hash="#/"
                 window.location.reload()
+            }else{
+                message.info(res.data.message)
             }
             
         })
@@ -53,7 +55,7 @@ class login extends Component {
                         placeholder="Password"
                         />
                     </Form.Item>
-                    <Form.Item>
+                    {/* <Form.Item>
                         <Form.Item name="remember" valuePropName="checked" noStyle>
                         <Checkbox>记住我</Checkbox>
                         </Form.Item>
@@ -61,7 +63,7 @@ class login extends Component {
                         <a className="login-form-forgot" href="">
                         Forgot password
                         </a>
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">

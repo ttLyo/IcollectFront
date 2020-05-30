@@ -13,6 +13,9 @@ let username=localStorage.getItem("username")
 const menu = (
   <Menu>
   <Menu.Item>
+    <Link className="ant-dropdown-link" to="/creator">发布项目</Link>
+  </Menu.Item>
+  <Menu.Item>
     <Link className="ant-dropdown-link" to={"/person/"+username}>个人主页</Link>
   </Menu.Item>
     <Menu.Item>

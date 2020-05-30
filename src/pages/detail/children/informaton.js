@@ -2,12 +2,13 @@ import React, { Component } from "react"
 import { Tabs, Comment, Tooltip, List, Descriptions, Form, Button, Input, message  } from 'antd';
 import moment from 'moment';
 import axios from "../../../util/axios"
+import pic from "../../images/user.jpg"
 const {TabPane} = Tabs
 const { TextArea } = Input;
 let comment=(author,avatar,content,time)=>(
     {
         author,
-        avatar: avatar||'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        avatar: avatar||pic,
         content: (
         <p>
             {content}
@@ -92,7 +93,7 @@ class information extends Component {
                                 </Form.Item>
                             <Form.Item>
                                 <Button htmlType="submit"  type="primary">
-                                    Add Comment
+                                    添加评论
                                 </Button>
                             </Form.Item>
                         </Form>

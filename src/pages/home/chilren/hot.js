@@ -16,7 +16,10 @@ class hot extends Component {
             list.push(axios.get("project/getByCategory?category="+i))
         }
         Axios.all(list).then((a)=>{
-            a=a.map((i)=>{
+            a=a.filter((i)=>{
+                if(i.data.data[0])
+                return true
+            }).map(i=>{
                 return i.data.data[0]
             })
             console.log(a)

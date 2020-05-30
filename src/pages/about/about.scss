@@ -2,6 +2,14 @@
     padding: 70px 10%;
     /* background-color: rgb(250, 253, 250); */
 }
+.info1{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    // grid-template-rows: 100px 100px 100px;
+}
+.userPic{
+    cursor: pointer;
+}
 .input{
     width: 2em;
 }

@@ -41,15 +41,12 @@ class summary extends Component {
         this.setState({money:e})
     }
     render(){
-        console.log(this.props)
         return (
             <div className="summary">
                 <div className="carousel" >
-                    <Carousel >
-                        <div>
-                        <img src={url+"img/get/project/"+this.props.pid+"/"+this.props.image}></img>
-                        </div>
-                    </Carousel>
+                <div>
+                <img className="image" src={url+"image/get/project/"+this.props.pid+"/"+this.props.image}></img>
+                </div>
                 </div>
                 <div className="titleInfo">
                     <h3>目标:</h3>
@@ -57,7 +54,6 @@ class summary extends Component {
                     <h3>已募集:</h3>
                     <h2 className="now">￥{this.props.currentMoney}</h2>
                     <Button block size="large" onClick={this.showSupport}>支持作品</Button>
-                    {/* <h3>剩余时间: 26H</h3> */}
                     <h3 className="timeLeft">截止时间: {this.props.endTime}</h3>
                 </div>
                 <Modal width={400}
@@ -65,9 +61,11 @@ class summary extends Component {
                     visible={this.state.IsShowSupport}
                     onOk={this.support}
                     onCancel={this.handleCancel}
+                    cancelText="取消"
+                    okText="确定"
                     >
                     <p className="thancks">感谢您的支持！</p>
-                    <img src={url+"img/get/project/"+this.props.pid+"/"+this.props.qrCode}></img><br />
+                    <img style={{width:"50%"}} src={url+"image/get/project/"+this.props.pid+"/"+this.props.qrCode}></img><br />
                     支持金额：￥<InputNumber min={1} value={this.state.money} onChange={this.handleChange} />
                 </Modal>
             </div>
