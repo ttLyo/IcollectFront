@@ -30,11 +30,11 @@ function goSearch(key){
   window.location.reload()
 }
 function header() {
-  let person=username===""?
+  let person=(!username?
   (<Link to="/loginAndRegister"><Button className="btn_login" type="link">登录/注册</Button></Link>):
   (<Dropdown overlay={menu} className="btn_login">
       <Button>{username}<DownOutlined /></Button>
-  </Dropdown>)
+  </Dropdown>))
 
   return (
     <div className="header">

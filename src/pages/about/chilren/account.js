@@ -96,15 +96,15 @@ class SiderDemo extends Component {
                 }
             }
         }
-        let urlPic = this.props.image?url+"image/get/user/"+this.state.avatar+"/"+this.state.username:pic
+        let urlPic = this.state.avatar?url+"image/get/user/"+this.state.username+"/"+this.state.avatar:pic
         return (
             <div className="infomation">
                 <Tabs tabPosition="left" style={{marginTop: '3em'}}>
                     <TabPane tab="账户信息" key="1" className="info1">
 
                         <Form  ref={this.formRef} {...layout}  onFinish={this.setInfo}  validateMessages={validateMessages}>
-                            <Form.Item name='username' label="昵称">
-                                <Input value="123" />
+                            <Form.Item name='username' label="用户名">
+                                <Input value="123" disabled />
                             </Form.Item>
 
                             <Form.Item name='area' label="地区">
@@ -214,7 +214,7 @@ class SiderDemo extends Component {
                             renderItem={item => (
                                 <List.Item>
                                     <List.Item.Meta
-                                        avatar={<Avatar src={pic} />}
+                                        avatar={<Avatar src={urlPic} />}
                                         title={<a href={"#/detail/"+item.pid}>评论 [{item.projectName}]</a>}
                                         description={item.content}
                                     />

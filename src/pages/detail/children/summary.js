@@ -63,6 +63,7 @@ class summary extends Component {
                     onCancel={this.handleCancel}
                     cancelText="取消"
                     okText="确定"
+                    style={{textAlign:"center"}}
                     >
                     <p className="thancks">感谢您的支持！</p>
                     <img style={{width:"50%"}} src={url+"image/get/project/"+this.props.pid+"/"+this.props.qrCode}></img><br />

@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { Tabs, Comment, Tooltip, List, Descriptions, Form, Button, Input, message  } from 'antd';
 import moment from 'moment';
 import axios from "../../../util/axios"
+import url from "../../../util/url"
 import pic from "../../images/user.jpg"
 const {TabPane} = Tabs
 const { TextArea } = Input;
@@ -30,6 +31,7 @@ let comment=(author,avatar,content,time)=>(
     }
 )
 class information extends Component {
+    formRef = React.createRef();
     constructor(){
         super()
         
@@ -42,10 +44,10 @@ class information extends Component {
     }
     getInfo=()=>{
          axios.get("getComment?pid="+this.props.pid).then(res=>{
-            // console.log(res)
+            console.log(res)
             let commentList=[]
             for(let i of res.data.data){
-                commentList.push(comment(i.username,'',i.content,i.ctime))
+                commentList.push(comment(i.username,i.avatar,i.content,i.ctime))
             }
             // console.log(commentList)
             this.setState({commentList})
@@ -57,12 +59,16 @@ class information extends Component {
             // console.log(res)
             if(res.data.code==200){
                 message.success("成功")
+                this.formRef.current.setFieldsValue({
+                    text:""
+                  });
                 this.getInfo()
             }
             
         })
     }
     render(){
+        let urlPic = this.state.avatar?url+"image/get/user/"+this.state.username+"/"+this.state.avatar:pic
         return (
             <div className="infomation">
                 <Tabs defaultActiveKey="1" >
@@ -87,7 +93,7 @@ class information extends Component {
                             </li>
                             )}
                         />
-                        <Form onFinish={this.addComent}>
+                        <Form onFinish={this.addComent} ref={this.formRef}>
                             <Form.Item name="text">
                                 <TextArea rows={4}  />
                                 </Form.Item>

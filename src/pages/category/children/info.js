@@ -1,5 +1,8 @@
 import React, { Component } from "react"
 import { Carousel } from 'antd';
+import pic from "../../images/123.jpeg"
+import axios from "../../../util/axios"
+import url from "../../../util/url"
 class info extends Component {
     constructor(props) {
         super(props);
@@ -13,7 +16,7 @@ class info extends Component {
             // },
             id: this.props.linkId,
             name: null,
-            pics: Array(3).fill(null),
+            pics: Array(3).fill({}),
             words: null
         }
         this.name = {
@@ -33,7 +36,7 @@ class info extends Component {
             this.words = words;
         }
         let datas = {
-            '1': new data(1, ['hello', 'world', 'there'], '意存笔先，画尽意在。——唐·张彦远'),
+            '1': new data(1, [pic, 'world', 'there'], '意存笔先，画尽意在。——唐·张彦远'),
             '2': new data(2, ['1', '2', '3'], '镜头代表着眼睛，但它代表着两种眼睛，一种是观众的眼睛，一种是剧中人的眼睛。——（中国作家）夏衍'),
             '3': new data(3, ['4', '5', '6'], '最精美的宝石，受匠人琢磨的时间最长。最贵重的雕刻，受凿的打击最多。'),
             '4': new data(4, ['7', '8', '9'], '王者以民为天，而民以食为天。——《汉书·郦食其传》'),
@@ -44,6 +47,16 @@ class info extends Component {
         //     pics: ['hello', 'world', 'there'],
         //     words: '你好你好你好'
         // }
+        axios.get("project/getByCategory?category="+this.props.linkId).then(res=>{
+            console.log(res)
+            if(res.data.code==200){
+                let pics=[]
+                res.data.data.map(item=>{
+                    pics.push(url+"image/get/project/"+item.pid+"/"+item.image)
+                })
+                this.setState({pics:pics.slice(0,3)})
+            }
+        })
         return datas;
     }
 
@@ -57,6 +70,7 @@ class info extends Component {
         //     words: datas[id].words
         // });
         const datas = this.getData();
+        console.log(datas)
         const { id } = this.state;
         this.setState({
             name: this.name[id],
@@ -66,15 +80,13 @@ class info extends Component {
     }
 
     render() {
-       
-        //console.log(this.state.pics);
         return (
             <div className="info">
                 <div className="carousel" >
                     <Carousel autoplay>
                         {
                             this.state.pics.map((item, index) => (<div key={index}>
-                                <h3> {item} </h3>
+                                <img src={item} className="info_pic"/>
                             </div>))
                         }
                         {/* <div>

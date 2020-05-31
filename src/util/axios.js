@@ -23,7 +23,9 @@ instace.interceptors.response.use(function (response) {
     // 对响应错误做点什么
     console.log(error);
     if (!error.response) {
-      // alert("网络错误")
+      alert("未登录或登录过期")
+      localStorage.clear()
+      window.location.reload()
       return Promise.reject("网络错误")
     }
     return Promise.reject(error);

@@ -8,7 +8,7 @@ const handleChange=(e)=>{
   if(!e.event){
     message.info("成功")
     setTimeout(() => {
-      // window.location.hash="#/"
+      window.location.hash="#/"
     }, 100);
     
   }
@@ -21,8 +21,17 @@ const Step3 = props => {
   return (
     <div>
     <div style={{display:'flex',justifyContent:'center',justifyContent:"space-around"}}>
+      
       <div style={{width: '40%'}}>
-        <Upload.Dragger {...props.config} >
+        <Upload.Dragger {...props.config1}>
+          <p className="ant-upload-drag-icon">
+            <InboxOutlined/>
+          </p>
+          <p className="ant-upload-text">上传二维码</p>
+        </Upload.Dragger>
+      </div>
+      <div style={{width: '40%'}}>
+        <Upload.Dragger {...props.config}  onChange={handleChange}>
           <p className="ant-upload-drag-icon">
             <InboxOutlined/>
           </p>
@@ -30,14 +39,6 @@ const Step3 = props => {
           {/* <p className="ant-upload-hint">
             支持一个文件或多个文件上传
           </p> */}
-        </Upload.Dragger>
-      </div>
-      <div style={{width: '40%'}}>
-        <Upload.Dragger {...props.config1} onChange={handleChange}>
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined/>
-          </p>
-          <p className="ant-upload-text">上传二维码</p>
         </Upload.Dragger>
       </div>
       <br />
